@@ -568,6 +568,9 @@ export class PgUpdateBase<
 
 	/** @internal */
 	getSQL(): SQL {
+		if (!this.config.where) {
+			throw new Error("missing where clause in update operation")
+		}
 		return this.dialect.buildUpdateQuery(this.config);
 	}
 

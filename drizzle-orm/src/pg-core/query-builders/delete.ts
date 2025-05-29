@@ -232,6 +232,9 @@ export class PgDeleteBase<
 
 	/** @internal */
 	getSQL(): SQL {
+		if (!this.config.where) {
+			throw new Error("missing where clause in delete operation")
+		}
 		return this.dialect.buildDeleteQuery(this.config);
 	}
 
