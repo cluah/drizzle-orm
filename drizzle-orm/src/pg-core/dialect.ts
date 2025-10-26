@@ -138,6 +138,7 @@ export class PgDialect {
 	}
 
 	buildDeleteQuery({ table, where, returning, withList }: PgDeleteConfig): SQL {
+		if (!where) throw new Error("Missing WHERE clause in DELETE operation");
 		const withSql = this.buildWithCTE(withList);
 
 		const returningSql = returning
@@ -171,6 +172,8 @@ export class PgDialect {
 	}
 
 	buildUpdateQuery({ table, set, where, returning, withList, from, joins }: PgUpdateConfig): SQL {
+		if (!where) throw new Error("Missing WHERE clause in UPDATE operation");
+		
 		const withSql = this.buildWithCTE(withList);
 
 		const tableName = table[PgTable.Symbol.Name];
